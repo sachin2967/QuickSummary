@@ -1,14 +1,18 @@
 from flask import Flask, render_template, request
 import requests
 import json
+from dotenv import load_dotenv
+import os
+def config():
+    load_dotenv()
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    config()
     if request.method == 'POST':
-        API_TOKEN = "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"
-        headers = {"Authorization": f"Bearer {API_TOKEN}"}
+        headers = {"Authorization": f"Bearer {os.getenv('API_TOKEN')}"}
         API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
 
         def query(payload):
